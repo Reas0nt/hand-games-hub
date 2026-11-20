@@ -6,6 +6,20 @@ to start it. When the game exits you return to the hub.
 
 Both games and the hub share one Python virtual environment (`.venv`).
 
+## About
+
+This is a project for fairs and exhibitions. It was built by Computer
+Engineering students at Instituto Profesional Santo Tomás, Chillán, Chile.
+
+| Game | Folder | Original repository |
+|------|--------|---------------------|
+| Space Invaders: Hand Control Edition | `games/space-invaders` | [Reas0nt/SpaceInvaderHandControl](https://github.com/Reas0nt/SpaceInvaderHandControl) |
+| Flappy Hand | `games/flappy` | [Maikol2305/Flappy-Bird](https://github.com/Maikol2305/Flappy-Bird) |
+
+The games are copied into this repository. Space Invaders was migrated from the
+legacy `mp.solutions` API to the MediaPipe Tasks API so both games share
+`mediapipe==1.2.3`.
+
 ## Requirements
 
 - Python 3.12
