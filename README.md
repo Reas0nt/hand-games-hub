@@ -1,10 +1,11 @@
-# Game Hub
+# Hub de Juegos
 
-A gesture-controlled launcher. It shows the games listed in `games.json` on a
-hub screen. Move your hand left or right to choose a game, then pinch and hold
-to start it. When the game exits you return to the hub.
+Lanzador de juegos controlado con la mano. Muestra en pantalla los juegos
+definidos en `games.json`. Mueve la mano a la izquierda o a la derecha para
+elegir un juego y luego haz el gesto de pinza (pulgar con índice) y mantenlo
+para iniciarlo. Al salir del juego vuelves al hub.
 
-Both games and the hub share one Python virtual environment (`.venv`).
+El hub y ambos juegos comparten un mismo entorno virtual de Python (`.venv`).
 
 ## Acerca del proyecto
 
@@ -20,51 +21,82 @@ Los juegos están copiados dentro de este repositorio. Space Invaders se migró 
 la API antigua `mp.solutions` a la API Tasks de MediaPipe, para que ambos juegos
 compartan `mediapipe==1.2.3`.
 
-## Requirements
+## Requisitos
 
 - Python 3.12
-- A webcam
-- `models/hand_landmarker.task` (included in the repository)
+- Una cámara web
+- `models/hand_landmarker.task` (incluido en el repositorio)
 
-## Setup
+Las dependencias están fijadas en `requirements.txt`:
 
-### Linux
-
-```sh
-uv venv --python 3.12 .venv
-uv pip install --python .venv/bin/python -r requirements.txt
-chmod +x run.sh
-./run.sh
+```text
+mediapipe==1.2.3
+pygame-ce==2.5.8
+pytest==9.2.0
 ```
 
-### Windows
+`mediapipe` instala también `opencv-contrib-python` y `numpy`. No instales
+`opencv-python` ni `pygame` por separado, porque entran en conflicto.
+
+## Instalación
+
+### 1. Clonar el repositorio
+
+```sh
+git clone https://github.com/Reas0nt/hand-games-hub.git
+cd hand-games-hub
+```
+
+### 2. Crear el entorno e instalar dependencias
+
+**Windows** (PowerShell o CMD):
 
 ```bat
 py -3.12 -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
-run.bat
 ```
 
-## Controls
+**Linux**:
 
-| Action | Gesture | Keyboard |
+```sh
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Si usas [uv](https://docs.astral.sh/uv/), también sirve:
+
+```sh
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+```
+
+### 3. Ejecutar
+
+- **Windows**: doble clic en `run.bat`, o ejecuta `run.bat` en la terminal.
+- **Linux**: `./run.sh` (el archivo ya tiene permiso de ejecución en el
+  repositorio; si no, usa `chmod +x run.sh`).
+
+## Controles
+
+| Acción | Gesto | Teclado |
 | --- | --- | --- |
-| Move selection | Move your hand left/right | Left / Right arrows |
-| Start selected game | Pinch and hold (about 0.8 s) | Enter or Space |
-| Retry camera | - | F5 |
-| Quit the hub | - | Esc |
+| Cambiar selección | Mover la mano a izquierda/derecha | Flechas izquierda / derecha |
+| Iniciar el juego seleccionado | Pinza mantenida (unos 0,8 s) | Enter o Espacio |
+| Reintentar la cámara | - | F5 |
+| Salir del hub | - | Esc |
 
-After a game exits, gestures are ignored for 2 seconds so a pinch from the
-game does not start another one.
+Al volver de un juego, los gestos se ignoran durante 2 segundos para que una
+pinza hecha dentro del juego no inicie otro.
 
-## Environment variables
+## Variables de entorno
 
-- `HUB_CAMERA_INDEX`: camera index to open (default `0`).
-- `HUB_WINDOWED=1`: run in a 1280x720 window instead of fullscreen.
+- `HUB_CAMERA_INDEX`: índice de la cámara a usar (por defecto `0`).
+- `HUB_WINDOWED=1`: ejecuta en una ventana de 1280x720 en lugar de pantalla
+  completa.
 
-## Adding a game
+## Agregar un juego
 
-Add an object to the `games` list in `games.json`:
+Agrega un objeto a la lista `games` en `games.json`:
 
 ```json
 {
@@ -78,30 +110,30 @@ Add an object to the `games` list in `games.json`:
 }
 ```
 
-- `dir` is relative to the hub folder. `entry` is relative to `dir`.
-- `thumbnail` is relative to the game folder. Use `null` or omit it for a
-  colored placeholder.
-- `python` is optional. Relative paths are resolved from the hub folder.
-  When omitted, the game runs with the hub's Python (`.venv`).
-- `id` must be unique.
+- `dir` es relativo a la carpeta del hub. `entry` es relativo a `dir`.
+- `thumbnail` es relativo a la carpeta del juego. Usa `null` u omítelo para
+  mostrar una tarjeta de color.
+- `python` es opcional. Las rutas relativas se resuelven desde la carpeta del
+  hub. Si se omite, el juego se ejecuta con el Python del hub (`.venv`).
+- `id` debe ser único.
 
-## Running the tests
+## Ejecutar los tests
 
 ```sh
 .venv/bin/python -m pytest -q
 ```
 
-On Windows use `.venv\Scripts\python -m pytest -q`.
+En Windows: `.venv\Scripts\python -m pytest -q`.
 
-## Troubleshooting
+## Solución de problemas
 
-- **"Camera not available - use keyboard"**: another application may be using
-  the webcam. Close it, then press F5. Or set `HUB_CAMERA_INDEX` to another
-  camera.
-- **"Hand model missing"**: `models/hand_landmarker.task` is not present.
-  Restore it from the repository.
-- **`module 'mediapipe' has no attribute 'solutions'`**: old game code. All code
-  uses the MediaPipe Tasks API (`mediapipe==1.2.3`). Update the file and
-  reinstall with `requirements.txt`.
-- **A game fails right after starting**: the failure message on the hub shows
-  the last line of the game's error output.
+- **"Camera not available - use keyboard"**: otra aplicación puede estar usando
+  la cámara. Ciérrala y presiona F5, o define `HUB_CAMERA_INDEX` con otra
+  cámara.
+- **"Hand model missing"**: falta `models/hand_landmarker.task`. Recupéralo del
+  repositorio.
+- **`module 'mediapipe' has no attribute 'solutions'`**: código antiguo. Todo el
+  proyecto usa la API Tasks de MediaPipe (`mediapipe==1.2.3`). Actualiza el
+  archivo y reinstala con `requirements.txt`.
+- **Un juego falla justo al iniciar**: el mensaje de error en el hub muestra la
+  última línea de la salida de error del juego.
