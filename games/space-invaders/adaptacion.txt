@@ -1,0 +1,13 @@
+"Actúa como un desarrollador senior experto en Python. Crea un videojuego estilo Space Invaders utilizando la librería Pygame. El control del jugador debe integrarse con una cámara web utilizando OpenCV y Mediapipe.
+
+Requerimientos técnicos:
+
+Movimiento: La posición 'x' de la nave debe seguir el punto de referencia 9 (base del dedo medio) de la mano detectada. Implementa un mapeo suave entre el ancho de la cámara y el ancho de la ventana del juego.
+
+Disparo: Si la punta del dedo índice (punto 8) y la punta del pulgar (punto 4) se acercan a una distancia mínima (gesto de pinza/salpicar), la nave debe disparar.
+
+Estructura: Usa clases para el Jugador, Enemigos y Balas. Incluye un sistema de colisiones simple.
+
+Interfaz: Muestra la alimentación de la cámara en una esquina pequeña de la ventana de Pygame para que el usuario vea su mano.
+
+Comentarios: Explica cada sección del código detalladamente para un estudiante de ingeniería."
