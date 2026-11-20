@@ -1,0 +1,20 @@
+{
+  "games": [
+    {
+      "id": "space-invaders",
+      "title": "Space Invaders",
+      "description": "Move your hand to steer the ship. Pinch to shoot.",
+      "dir": "games/space-invaders",
+      "entry": "SpaceInvadersHandControl.py",
+      "thumbnail": "Recursos/SpaceShip.png"
+    },
+    {
+      "id": "flappy",
+      "title": "Flappy Hand",
+      "description": "Raise and lower your hand to fly.",
+      "dir": "games/flappy",
+      "entry": "flappy_cam.py",
+      "thumbnail": null
+    }
+  ]
+}
